@@ -114,6 +114,37 @@ setenv  VERSIONGCCCORE                "8.3.0"
 
 EOF
 
+cat << EOF > /scratch/modules/cuda/10.2
+#%Module
+proc ModulesHelp { } {
+    puts stderr {
+
+Description
+===========
+C, C++ and Fortran compilers from The Portland Group - PGI
+
+
+More information
+================
+ - Homepage: http://www.pgroup.com/
+    }
+}
+
+module-whatis {Description: C, C++ and Fortran compilers from The Portland Group - PGI}
+module-whatis {Homepage: http://www.pgroup.com/}
+module-whatis {URL: http://www.pgroup.com/}
+
+set root /usr/local/cuda-10.2/
+
+prepend-path    LD_LIBRARY_PATH         \$root/lib64
+prepend-path    LIBRARY_PATH            \$root/lib64
+prepend-path    PATH            \$root/bin
+setenv  VERSIONCUDA            "10.2"
+
+setenv  CUDA_HOME             "\$root"
+setenv  CUDA_ROOT             "\$root"
+EOF
+
 ssh-keyscan github.com >> githubKey
 echo `ssh-keygen -lf githubKey` > >> ~/.ssh/known_hosts
 
