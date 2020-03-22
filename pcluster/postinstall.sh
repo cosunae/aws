@@ -22,7 +22,7 @@ wget -q -nc --no-check-certificate -O /scratch/var/tmp/pgi-community-linux-x64-l
 mkdir -p /scratch/var/tmp/pgi
 tar -x -f /scratch/var/tmp/pgi-community-linux-x64-latest.tar.gz -C /scratch/var/tmp/pgi -z
 cd /scratch/var/tmp/pgi
-sudo PGI_ACCEPT_EULA=accept PGI_INSTALL_DIR=/scratch/opt/pgi PGI_INSTALL_MPI=false PGI_INSTALL_NVIDIA=true PGI_MPI_GPU_SUPPORT=false PGI_SILENT=true ./install 
+sudo PGI_ACCEPT_EULA=accept PGI_INSTALL_DIR=/software/opt/pgi PGI_INSTALL_MPI=false PGI_INSTALL_NVIDIA=true PGI_MPI_GPU_SUPPORT=false PGI_SILENT=true ./install 
 sudo rm -rf /scratch/var/tmp/pgi-community-linux-x64-latest.tar.gz /scratch/var/tmp/pgi
 
 ## edit ssh config for github keys
@@ -32,14 +32,15 @@ User cosunae
 Protocol 2
 PubkeyAuthentication yes
 PasswordAuthentication yes
+StrictHostKeyChecking no 
 IdentityFile ~/.ssh/id_github
 EOF
 
 
 #creating env modules
-mkdir -p /scratch/modules/pgi
+mkdir -p /software/modules/pgi
 
-cat << EOF > /scratch/modules/pgi/19.10
+cat << EOF > /software/modules/pgi/19.10
 #%Module
 proc ModulesHelp { } {
     puts stderr {
@@ -59,7 +60,7 @@ module-whatis {Description: C, C++ and Fortran compilers from The Portland Group
 module-whatis {Homepage: http://www.pgroup.com/}
 module-whatis {URL: http://www.pgroup.com/}
 
-set root /scratch/opt/pgi/
+set root /software/opt/pgi/
 
 prepend-path    LD_LIBRARY_PATH         \$root/linux86-64-llvm/19.10/lib
 prepend-path    LIBRARY_PATH            \$root/linux86-64-llvm/19.10/lib
@@ -72,9 +73,9 @@ setenv  PGI             "\$root"
 
 EOF
 
-mkdir -p /scratch/modules/gcc
+mkdir -p /software/modules/gcc
 
-cat << EOF > /scratch/modules/gcc/8.3.0
+cat << EOF > /software/modules/gcc/8.3.0
 #%Module
 proc ModulesHelp { } {
     puts stderr {
@@ -114,7 +115,8 @@ setenv  VERSIONGCCCORE                "8.3.0"
 
 EOF
 
-cat << EOF > /scratch/modules/cuda/10.2
+mkdir -p /software/modules/cuda/
+cat << EOF > /software/modules/cuda/10.2
 #%Module
 proc ModulesHelp { } {
     puts stderr {
@@ -146,14 +148,14 @@ setenv  CUDA_ROOT             "\$root"
 EOF
 
 ssh-keyscan github.com >> githubKey
-echo `ssh-keygen -lf githubKey` > >> ~/.ssh/known_hosts
+echo `ssh-keygen -lf githubKey` >> ~/.ssh/known_hosts
 
-cd /scratch/
+cd /software/
 git clone git@github.com:cosunae/spack-mch.git
 cd spack-mch
 git checkout aws
 
-./config.sh -i /scratch/ -m aws
-. /scratch/spack/share/spack/setup-env.sh 
+./config.sh -i /software/ -m aws
+. /software/spack/share/spack/setup-env.sh 
 spack -vv install cosmo@aws_5.07.mch1.0.p4%pgi cosmo_target=cpu
 
