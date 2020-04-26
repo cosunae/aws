@@ -2,10 +2,14 @@ mkdir /scratch/build
 
 cd /scratch/build
 
+
+
+
 #apply patch
 sudo patch /opt/amazon/openmpi/include/mpif-sizeof.h < patch.mpif-sizeof.h
 
-sudo apt-get -y install gcc-8 g++-8 gfortran-8 numactl
+sudo apt-get -y install gcc-8 g++-8 gfortran-8 numactl libnetcdf-dev librdkafka-dev python3-dev environment-modules tcl  libnuma-dev
+add.modules
 
 #install cuda
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
@@ -24,6 +28,15 @@ tar -x -f /scratch/var/tmp/pgi-community-linux-x64-latest.tar.gz -C /scratch/var
 cd /scratch/var/tmp/pgi
 sudo PGI_ACCEPT_EULA=accept PGI_INSTALL_DIR=/software/opt/pgi PGI_INSTALL_MPI=false PGI_INSTALL_NVIDIA=true PGI_MPI_GPU_SUPPORT=false PGI_SILENT=true ./install 
 sudo rm -rf /scratch/var/tmp/pgi-community-linux-x64-latest.tar.gz /scratch/var/tmp/pgi
+
+#install openmpi
+cd /scratch/build/
+wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-4.0.2.tar.bz2
+bunzip2 openmpi-4.0.2.tar.bz2
+tar xvf openmpi-4.0.2.tar
+cd openmpi-4.0.2
+./configure --prefix=/software/openmpi --with-ofi=/opt/amazon/efa/ --with-sge --disable-openib-udcm --with-cuda=/usr/local/cuda-10.2/
+make install -j6
 
 ## edit ssh config for github keys
 cat  << EOF > ~/.ssh/config
