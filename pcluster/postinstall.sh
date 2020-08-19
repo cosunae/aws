@@ -8,7 +8,7 @@ cd /scratch/build
 #apply patch
 sudo patch /opt/amazon/openmpi/include/mpif-sizeof.h < patch.mpif-sizeof.h
 
-sudo apt-get -y install gcc-8 g++-8 gfortran-8 numactl libnetcdf-dev librdkafka-dev python3-dev environment-modules tcl  libnuma-dev
+sudo apt-get -y install gcc-8 g++-8 gfortran-8 numactl libnetcdf-dev librdkafka-dev python3-dev environment-modules tcl  libnuma-dev m4 libxml2-dev flex openjdk-8-jdk bison unzip autoconf libtool g++-8-dev libssl-dev
 add.modules
 
 #install cuda
@@ -115,7 +115,7 @@ set root /usr/
 setenv  ROOTGCC               "\$root"
 setenv  VERSIONGCC            "8.3.0"
 
-prepend-path    CPATH           \$root/include
+prepend-path    CPATH           \$root/include/c++/8/
 prepend-path    LD_LIBRARY_PATH         \$root/lib
 prepend-path    LD_LIBRARY_PATH         \$root/lib64
 prepend-path    LD_LIBRARY_PATH         \$root/lib/gcc/x86_64-pc-linux-gnu/8.3.0
