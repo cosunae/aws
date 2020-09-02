@@ -1,4 +1,4 @@
-FROM cosmo/eks-base:latest
+FROM 066650776666.dkr.ecr.eu-central-1.amazonaws.com/cosmo/eks-base:latest
 
 WORKDIR /home/
 
