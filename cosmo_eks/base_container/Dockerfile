@@ -31,7 +31,7 @@ RUN wget https://github.com/ecmwf/eccodes/archive/2.12.0.tar.gz && \
     export CXX=g++-8 && export CC=gcc-8 && \
     /home/ecbuild-3.1.0/bin/ecbuild ../ -DENABLE_FORTRAN=OFF -DCMAKE_INSTALL_PREFIX=/usr/share/eccodes && \
     make -j4 install 
-
+RUN aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:eu-central-1:066650776666:secret:cosmo_aws_access_key_id-t4v9FH
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && \
     ./aws/install
