@@ -21,11 +21,8 @@ phases:
     - echo Building the Docker image... 
     # update the following line with the name of your own ECR repository
     - cd cosmo_eks/base_container
-    - echo "cccccc checking keys" 
     - COSMO_AWS_ACCESS_KEY_ID=`aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:eu-central-1:066650776666:secret:cosmo_aws_access_key_id-t4v9FH --region eu-central-1 --query "SecretString"`
-    - echo "DEBUG  ${COSMO_AWS_ACCESS_KEY_ID}"
     - COSMO_AWS_SECRET_ACCESS_KEY=`aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:eu-central-1:066650776666:secret:cosmo_aws_secret_access_key-4UA057 --region eu-central-1 --query "SecretString"`
-    - echo "))))))))))))))))))))))))) ${COSMO_AWS_SECRET_ACCESS_KEY}"
     - docker build --build-arg cosmo_aws_access_key_id=${COSMO_AWS_ACCESS_KEY_ID} --build-arg cosmo_aws_secret_access_key=${COSMO_AWS_SECRET_ACCESS_KEY} -t $REPOSITORY_URI:latest .
     # update the following line with the URI of your own ECR repository (view the Push Commands in the console)
     - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG 
@@ -37,7 +34,6 @@ phases:
     - docker push $REPOSITORY_URI:latest
     - docker push $REPOSITORY_URI:$IMAGE_TAG
     - echo Writing image definitions file... 
-    #- printf '[{"ImageURI":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
     - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
 artifacts:
   files:
