@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+RUN aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:eu-central-1:066650776666:secret:cosmo_aws_access_key_id-t4v9FH
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libopenmpi-dev git libgcc-8-dev ssh  ca-certificates \
     make g++-8 gfortran-8 tar wget \
