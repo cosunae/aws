@@ -1,5 +1,10 @@
 FROM ubuntu:18.04
 
+ARG cosmo_aws_secret_access_key
+ARG cosmo_aws_access_key_id
+ENV aws_access_key_id={cosmo_aws_access_key_id}
+ENV aws_secret_access_key={cosmo_aws_secret_access_key}
+
 RUN echo "  AWS_SECRET_ACCESS_KEY : $aws_secret_access_key}  AWS_ACCESS_KEY_ID  ${aws_access_key_id}"
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libopenmpi-dev git libgcc-8-dev ssh  ca-certificates \
