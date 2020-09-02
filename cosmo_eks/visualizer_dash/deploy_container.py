@@ -13,7 +13,7 @@ import argparse
 def list_tags():
   print("Listing AWS ECR images")
   client = boto3.client('ecr')
-  print(json.dumps(client.list_images(repositoryName="cr-postproc"), sort_keys=True, indent=2))
+  print(json.dumps(client.list_images(repositoryName="cr-visualizer"), sort_keys=True, indent=2))
   pass
 
 def tag_image(tag):
@@ -24,7 +24,7 @@ def tag_image(tag):
   hashtag = out.stdout.decode("utf-8").strip()
   
   print("Docker hash image:", hashtag)
-  cmd = ['docker','tag',hashtag,'066650776666.dkr.ecr.eu-central-1.amazonaws.com/cr-postproc:'+tag]
+  cmd = ['docker','tag',hashtag,'066650776666.dkr.ecr.eu-central-1.amazonaws.com/cr-visualizer:'+tag]
   print(cmd)
   out = subprocess.run(cmd, capture_output=True)
   
@@ -32,9 +32,9 @@ def tag_image(tag):
     raise RuntimeError("docker tag failed")
  
   print("push docker image")
-  cmd=['docker','push','066650776666.dkr.ecr.eu-central-1.amazonaws.com/cr-postproc:'+tag]
+  cmd=['docker','push','066650776666.dkr.ecr.eu-central-1.amazonaws.com/cr-visualizer:'+tag]
   print(cmd) 
-  out = subprocess.run(['docker','push','066650776666.dkr.ecr.eu-central-1.amazonaws.com/cr-postproc:'+tag], capture_output=True)
+  out = subprocess.run(['docker','push','066650776666.dkr.ecr.eu-central-1.amazonaws.com/cr-visualizer:'+tag], capture_output=True)
   
   if out.returncode != 0:
     raise RuntimeError("docker push failed")
