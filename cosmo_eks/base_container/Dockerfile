@@ -1,5 +1,6 @@
 FROM ubuntu:18.04
 
+RUN echo "  AWS_SECRET_ACCESS_KEY : $aws_secret_access_key}  AWS_ACCESS_KEY_ID  ${aws_access_key_id}"
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libopenmpi-dev git libgcc-8-dev ssh  ca-certificates \
     make g++-8 gfortran-8 tar wget \
