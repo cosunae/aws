@@ -10,7 +10,8 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     unzip awscliv2.zip && \
     ./aws/install
 
-RUN aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:eu-central-1:066650776666:secret:cosmo_aws_access_key_id-t4v9FH
+RUN aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:eu-central-1:066650776666:secret:cosmo_aws_access_key_id-t4v9FH \
+   --region eu-central-1
 
 #RUN mkdir ~/temp && cd ~/temp && \
 #    wget https://github.com/Kitware/CMake/releases/download/v3.16.5/cmake-3.16.5.tar.gz && \
