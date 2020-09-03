@@ -7,14 +7,20 @@ metadata:
   region: eu-central-1
   version: "1.17"
 
-availabilityZones: ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
-
 managedNodeGroups:
 - name: nodegroup
   desiredCapacity: 3
   ssh:
     allow: true
     publicKeyName: cosmo-eks
+  privateNetworking: true
+
+vpc:
+  subnets:
+    private:
+      eu-central-1a: { id: subnet-f0d5629a }
+      eu-central-1b: { id: subnet-8cd537f0 }
+      eu-central-1c: { id: subnet-88dc2dc4 }
 
 # To enable all of the control plane logs, uncomment below:
 # cloudWatch:
