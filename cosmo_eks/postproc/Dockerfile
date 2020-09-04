@@ -2,9 +2,6 @@ FROM 066650776666.dkr.ecr.eu-central-1.amazonaws.com/cosmo/eks-base:latest
 
 WORKDIR /home/
  
-RUN apt-get install -y openjdk-11-jre
-RUN wget http://mirror.easyname.ch/apache/kafka/2.6.0/kafka_2.12-2.6.0.tgz && tar xvf kafka_2.12-2.6.0.tgz
-
 #invalidate the cache when the head of the repo changes
 ADD https://api.github.com/repos/cosunae/cloudruption/git/refs/heads/master version.json
 RUN git clone https://github.com/cosunae/cloudruption.git 
