@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN mkdir ~/temp && cd ~/temp && \
     wget https://github.com/Kitware/CMake/releases/download/v3.16.5/cmake-3.16.5.tar.gz && \
     tar -xzvf cmake-3.16.5.tar.gz && \
-    cd cmake-3.16.5/ && export CC=gcc-8 && export  CXX=g++-8 && ./bootstrap && make -j4 && make install
+    cd cmake-3.16.5/ && export CC=gcc-8 && export  CXX=g++-8 && ./bootstrap && make install
 
 RUN python3.7 -m pip install wheel
 RUN python3.7 -m pip install numpy
