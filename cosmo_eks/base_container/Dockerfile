@@ -39,3 +39,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     unzip awscliv2.zip && \
     ./aws/install
 
+RUN mkdir -p ~/temp && cd ~/temp && git clone https://github.com/aws/aws-sdk-cpp && \
+    export CXX=g++-8 && export CC=gcc-8 && cd aws-sdk-cpp && mkdir build && cd build \
+    cmake ../ && make -j4 install
