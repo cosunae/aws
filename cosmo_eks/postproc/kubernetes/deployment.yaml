@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pp-destaggering
+  labels:
+    app: pp-destaggering
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pp-destaggering
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: pp-destaggering
+    spec:
+      containers:
+      - image: 066650776666.dkr.ecr.eu-central-1.amazonaws.com/cosmo/pp-destaggering
+        imagePullPolicy: Always
+        name: pp-destaggering
+        args: ["--kafkabroker", "b-1.kafka-cosmo.y851ew.c4.kafka.eu-central-1.amazonaws.com:9092,b-3.kafka-cosmo.y851ew.c4.kafka.eu-central-1.amazonaws.com:9092,b-2.kafka-cosmo.y851ew.c4.kafka.eu-central-1.amazonaws.com:9092", "--product","cosmo","--oproduct","kubeppp"]
